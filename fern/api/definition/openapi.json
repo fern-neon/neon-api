@@ -1,8 +1,9 @@
 {
   "openapi": "3.0.3",
   "servers": [
-      {
-          "url": "https://console.neon.tech/api/v2"
+      { "description": "Prod",
+        "url": "https://console.neon.tech/api/v2",
+        "x-server-name": "Production"
       }
   ],
   "info": {
