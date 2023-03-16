@@ -199,27 +199,27 @@
           }
       },
       "/projects/{project_id}/operations/{operation_id}": {
-        "parameters": [
-            {
-                "name": "project_id",
-                "in": "path",
-                "description": "The Neon project ID",
-                "required": true,
-                "schema": {
-                    "type": "string"
-                }
-            },
-            {
-                "name": "operation_id",
-                "in": "path",
-                "description": "The operation ID",
-                "required": true,
-                "schema": {
-                    "type": "string",
-                    "format": "uuid"
-                }
-            }
-        ],
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "operation_id",
+                  "in": "path",
+                  "description": "The operation ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string",
+                      "format": "uuid"
+                  }
+              }
+          ],
           "get": {
               "summary": "Get operation details",
               "description": "Retrieves details for the specified operation.\nAn operation is an action performed on a Neon project resource.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain a `operation_id` by listing operations for the project.\n",
@@ -342,17 +342,17 @@
           }
       },
       "/projects/{project_id}": {
-        "parameters": [
-            {
-                "name": "project_id",
-                "in": "path",
-                "description": "The Neon project ID",
-                "required": true,
-                "schema": {
-                    "type": "string"
-                }
-            }
-        ],
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "get": {
               "summary": "Get project details",
               "description": "Retrieves information about the specified project.\nA project is the top-level object in the Neon object hierarchy.\nYou can obtain a `project_id` by listing the projects for your Neon account.\n",
@@ -534,16 +534,16 @@
           }
       },
       "/projects/{project_id}/saved_queries": {
-        "parameters": [
-            {
-                "name": "project_id",
-                "in": "path",
-                "required": true,
-                "schema": {
-                    "type": "string"
-                }
-            }
-        ]
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ]
       },
       "/projects/{project_id}/permissions": {
           "parameters": [
@@ -2327,24 +2327,24 @@
           }
       },
       "/projects/{project_id}/endpoints/{endpoint_id}/passwordless_auth": {
-        "parameters": [
-            {
-                "name": "project_id",
-                "in": "path",
-                "required": true,
-                "schema": {
-                    "type": "string"
-                }
-            },
-            {
-                "name": "endpoint_id",
-                "in": "path",
-                "required": true,
-                "schema": {
-                    "type": "string"
-                }
-            }
-        ]
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "endpoint_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ]
       }
   },
   "components": {
