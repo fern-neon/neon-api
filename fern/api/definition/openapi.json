@@ -45,6 +45,31 @@
       }
   ],
   "paths": {
+      "/projects/{project_id}/applications/vercel": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "description": "Neon project ID",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ]
+      },
+      "/applications/oauth/{client_id}": {
+          "parameters": [
+              {
+                  "name": "client_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ]
+      },
       "/api_keys": {
           "get": {
               "summary": "Get a list of API keys",
@@ -174,6 +199,27 @@
           }
       },
       "/projects/{project_id}/operations/{operation_id}": {
+        "parameters": [
+            {
+                "name": "project_id",
+                "in": "path",
+                "description": "The Neon project ID",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "operation_id",
+                "in": "path",
+                "description": "The operation ID",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        ],
           "get": {
               "summary": "Get operation details",
               "description": "Retrieves details for the specified operation.\nAn operation is an action performed on a Neon project resource.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain a `operation_id` by listing operations for the project.\n",
@@ -296,6 +342,17 @@
           }
       },
       "/projects/{project_id}": {
+        "parameters": [
+            {
+                "name": "project_id",
+                "in": "path",
+                "description": "The Neon project ID",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
           "get": {
               "summary": "Get project details",
               "description": "Retrieves information about the specified project.\nA project is the top-level object in the Neon object hierarchy.\nYou can obtain a `project_id` by listing the projects for your Neon account.\n",
@@ -476,7 +533,75 @@
               }
           }
       },
+      "/projects/{project_id}/saved_queries": {
+        "parameters": [
+            {
+                "name": "project_id",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ]
+      },
+      "/projects/{project_id}/permissions": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ]
+      },
+      "/projects/{project_id}/permissions/{permission_id}": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "permission_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ]
+      },
+      "/saved_queries/{saved_query_id}": {
+          "parameters": [
+              {
+                  "name": "saved_query_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "integer",
+                      "format": "int64"
+                  }
+              }
+          ]
+      },
       "/projects/{project_id}/branches": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "post": {
               "summary": "Create a branch",
               "description": "Creates a branch in the specified project.\nYou can obtain a `project_id` by listing the projects for your Neon account.\n\nThis method does not require a request body, but you can specify one to create an endpoint for the branch or to select a non-default parent branch.\nThe default behavior is to create a branch from the project's root branch (`main`) with no endpoint, and the branch name is auto-generated.\nFor related information, see [Manage branches](https://neon.tech/docs/manage/branches/).\n",
@@ -592,6 +717,26 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "get": {
               "summary": "Get branch details",
               "description": "Retrieves information about the specified branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain a `branch_id` by listing the project's branches.\nA `branch_id` value has a `br-` prefix.\n\nEach Neon project has a root branch named `main`.\nA project may contain child branches that were branched from `main` or from another branch.\nA parent branch is identified by a `parent_id` value, which is the `id` of the parent branch.\nFor related information, see [Manage branches](https://neon.tech/docs/manage/branches/).\n",
@@ -740,6 +885,26 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/set_as_primary": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "post": {
               "tags": [
                   "Branch"
@@ -779,6 +944,26 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/endpoints": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "get": {
               "summary": "Get a list of branch endpoints",
               "description": "Retrieves a list of endpoints for the specified branch.\nCurrently, Neon permits only one endpoint per branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\n",
@@ -828,6 +1013,26 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/databases": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "get": {
               "summary": "Get a list of databases",
               "description": "Retrieves a list of databases for the specified branch.\nA branch can have multiple databases.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
@@ -946,6 +1151,35 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/databases/{database_name}": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "database_name",
+                  "in": "path",
+                  "description": "The database name",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "get": {
               "summary": "Get database details",
               "description": "Retrieves information about the specified database.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` and `database_name` by listing branch's databases.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
@@ -1111,6 +1345,26 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/roles": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "get": {
               "summary": "Get a list of roles",
               "description": "Retrieves a list of roles from the specified branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Manage users](https://neon.tech/docs/manage/users/).\n",
@@ -1213,6 +1467,35 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/roles/{role_name}": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "role_name",
+                  "in": "path",
+                  "description": "The role name",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "get": {
               "summary": "Get role details",
               "description": "Retrieves details about the specified role.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nYou can obtain the `role_name` by listing the roles for a branch.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Managing users](https://neon.tech/docs/manage/users/).\n",
@@ -1303,6 +1586,35 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/roles/{role_name}/reveal_password": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "role_name",
+                  "in": "path",
+                  "description": "The role name",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "get": {
               "summary": "Get role password",
               "description": "Retrieves password of the specified role if possible.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nYou can obtain the `role_name` by listing the roles for a branch.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Managing users](https://neon.tech/docs/manage/users/).\n",
@@ -1351,6 +1663,35 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/roles/{role_name}/reset_password": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "role_name",
+                  "in": "path",
+                  "description": "The role nam",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "post": {
               "summary": "Reset the role password",
               "description": "Resets the password for the specified role.\nReturns a new password and operations. The new password is ready to use when the last operation finishes.\nThe old password remains valid until last operation finishes.\nConnections to the read-write endpoint are dropped. If idle,\nthe read-write endpoint becomes active for a short period of time.\n\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nYou can obtain the `role_name` by listing the roles for a branch.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Managing users](https://neon.tech/docs/manage/users/).\n",
@@ -1410,6 +1751,17 @@
           }
       },
       "/projects/{project_id}/endpoints": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "post": {
               "summary": "Create an endpoint",
               "description": "Creates an endpoint for the specified branch.\nAn endpoint is a Neon compute instance.\nThere is a maximum of one endpoint per branch.\nIf the specified branch already has an endpoint, the operation fails.\n\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain `branch_id` by listing the project's branches.\nA `branch_id` has a `br-` prefix.\nCurrently, only the `read_write` endpoint type is supported.\nFor supported regions and `region_id` values, see [Regions](https://neon.tech/docs/introduction/regions/).\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n",
@@ -1602,6 +1954,26 @@
           }
       },
       "/projects/{project_id}/endpoints/{endpoint_id}": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "endpoint_id",
+                  "in": "path",
+                  "description": "The endpoint ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "get": {
               "summary": "Get an endpoint",
               "description": "Retrieves information about the specified endpoint.\nAn endpoint is a Neon compute instance.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain an `endpoint_id` by listing your project's endpoints.\nAn `endpoint_id` has an `ep-` prefix.\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n",
@@ -1875,6 +2247,26 @@
           }
       },
       "/projects/{project_id}/endpoints/{endpoint_id}/suspend": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "endpoint_id",
+                  "in": "path",
+                  "description": "The endpoint ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
           "post": {
               "summary": "Suspend an endpoint",
               "description": "Suspend the specified endpoint\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain an `endpoint_id` by listing your project's endpoints.\nAn `endpoint_id` has an `ep-` prefix.\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n",
@@ -1933,6 +2325,26 @@
                   }
               }
           }
+      },
+      "/projects/{project_id}/endpoints/{endpoint_id}/passwordless_auth": {
+        "parameters": [
+            {
+                "name": "project_id",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "endpoint_id",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ]
       }
   },
   "components": {
