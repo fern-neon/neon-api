@@ -45,31 +45,6 @@
       }
   ],
   "paths": {
-      "/projects/{project_id}/applications/vercel": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "description": "Neon project ID",
-                  "in": "path",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ]
-      },
-      "/applications/oauth/{client_id}": {
-          "parameters": [
-              {
-                  "name": "client_id",
-                  "in": "path",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ]
-      },
       "/api_keys": {
           "get": {
               "summary": "Get a list of API keys",
@@ -199,27 +174,6 @@
           }
       },
       "/projects/{project_id}/operations/{operation_id}": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "operation_id",
-                  "in": "path",
-                  "description": "The operation ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string",
-                      "format": "uuid"
-                  }
-              }
-          ],
           "get": {
               "summary": "Get operation details",
               "description": "Retrieves details for the specified operation.\nAn operation is an action performed on a Neon project resource.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain a `operation_id` by listing operations for the project.\n",
@@ -265,6 +219,7 @@
                   "Project"
               ],
               "operationId": "listProjects",
+              "x-request-name": "ListProjectsRequest",
               "parameters": [
                   {
                       "name": "cursor",
@@ -288,51 +243,7 @@
               ],
               "responses": {
                   "200": {
-                      "description": "Returned a list of projects for the Neon account",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "allOf": [
-                                      {
-                                          "$ref": "#/components/schemas/ProjectsResponse"
-                                      },
-                                      {
-                                          "$ref": "#/components/schemas/PaginationResponse"
-                                      }
-                                  ]
-                              },
-                              "example": {
-                                  "projects": [
-                                      {
-                                          "id": "shiny-wind-028834",
-                                          "platform_id": "aws",
-                                          "region_id": "aws-us-east-2",
-                                          "name": "shiny-wind-028834",
-                                          "provisioner": "k8s-pod",
-                                          "pg_version": 15,
-                                          "created_at": "2022-11-23T17:42:25Z",
-                                          "updated_at": "2022-11-23T17:42:25Z",
-                                          "proxy_host": "us-east-2.aws.neon.tech",
-                                          "cpu_used_sec": 0,
-                                          "branch_logical_size_limit": 0
-                                      },
-                                      {
-                                          "id": "winter-boat-259881",
-                                          "platform_id": "aws",
-                                          "region_id": "aws-us-east-2",
-                                          "name": "winter-boat-259881",
-                                          "provisioner": "k8s-pod",
-                                          "pg_version": 15,
-                                          "created_at": "2022-11-23T17:52:25Z",
-                                          "updated_at": "2022-11-23T17:52:25Z",
-                                          "proxy_host": "us-east-2.aws.neon.tech",
-                                          "cpu_used_sec": 0,
-                                          "branch_logical_size_limit": 0
-                                      }
-                                  ]
-                              }
-                          }
-                      }
+                    "$ref": "#/components/responses/ListProjects"
                   },
                   "default": {
                       "$ref": "#/components/responses/GeneralError"
@@ -345,7 +256,7 @@
               "tags": [
                   "Project"
               ],
-              "operationId": "createProject",
+              "operationId": "create",
               "requestBody": {
                   "required": true,
                   "content": {
@@ -385,24 +296,13 @@
           }
       },
       "/projects/{project_id}": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "get": {
               "summary": "Get project details",
               "description": "Retrieves information about the specified project.\nA project is the top-level object in the Neon object hierarchy.\nYou can obtain a `project_id` by listing the projects for your Neon account.\n",
               "tags": [
                   "Project"
               ],
-              "operationId": "getProject",
+              "operationId": "get",
               "responses": {
                   "200": {
                       "description": "Returned information about the specified project",
@@ -440,7 +340,7 @@
               "tags": [
                   "Project"
               ],
-              "operationId": "updateProject",
+              "operationId": "update",
               "requestBody": {
                   "required": true,
                   "content": {
@@ -494,7 +394,7 @@
               "tags": [
                   "Project"
               ],
-              "operationId": "deleteProject",
+              "operationId": "delete",
               "responses": {
                   "200": {
                       "description": "Deleted the specified project",
@@ -536,6 +436,7 @@
                   "Operation"
               ],
               "operationId": "listProjectOperations",
+              "x-request-name": "ListProjectOperationsRequest",
               "parameters": [
                   {
                       "name": "cursor",
@@ -575,75 +476,7 @@
               }
           }
       },
-      "/projects/{project_id}/saved_queries": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ]
-      },
-      "/projects/{project_id}/permissions": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ]
-      },
-      "/projects/{project_id}/permissions/{permission_id}": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "permission_id",
-                  "in": "path",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ]
-      },
-      "/saved_queries/{saved_query_id}": {
-          "parameters": [
-              {
-                  "name": "saved_query_id",
-                  "in": "path",
-                  "required": true,
-                  "schema": {
-                      "type": "integer",
-                      "format": "int64"
-                  }
-              }
-          ]
-      },
       "/projects/{project_id}/branches": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "post": {
               "summary": "Create a branch",
               "description": "Creates a branch in the specified project.\nYou can obtain a `project_id` by listing the projects for your Neon account.\n\nThis method does not require a request body, but you can specify one to create an endpoint for the branch or to select a non-default parent branch.\nThe default behavior is to create a branch from the project's root branch (`main`) with no endpoint, and the branch name is auto-generated.\nFor related information, see [Manage branches](https://neon.tech/docs/manage/branches/).\n",
@@ -759,33 +592,13 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "branch_id",
-                  "in": "path",
-                  "description": "The branch ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "get": {
               "summary": "Get branch details",
               "description": "Retrieves information about the specified branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain a `branch_id` by listing the project's branches.\nA `branch_id` value has a `br-` prefix.\n\nEach Neon project has a root branch named `main`.\nA project may contain child branches that were branched from `main` or from another branch.\nA parent branch is identified by a `parent_id` value, which is the `id` of the parent branch.\nFor related information, see [Manage branches](https://neon.tech/docs/manage/branches/).\n",
               "tags": [
                   "Branch"
               ],
-              "operationId": "getProjectBranch",
+              "operationId": "get",
               "responses": {
                   "200": {
                       "description": "Returned information about the specified branch",
@@ -821,7 +634,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "deleteProjectBranch",
+              "operationId": "delete",
               "responses": {
                   "200": {
                       "description": "Deleted the specified branch",
@@ -880,7 +693,7 @@
               ],
               "summary": "Update a branch",
               "description": "Updates the specified branch. Only changing the branch name is supported.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nFor more information, see [Manage branches](https://neon.tech/docs/manage/branches/).\n",
-              "operationId": "updateProjectBranch",
+              "operationId": "update",
               "requestBody": {
                   "content": {
                       "application/json": {
@@ -927,26 +740,6 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/set_as_primary": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "branch_id",
-                  "in": "path",
-                  "description": "The branch ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "post": {
               "tags": [
                   "Branch"
@@ -986,33 +779,13 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/endpoints": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "branch_id",
-                  "in": "path",
-                  "description": "The branch ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "get": {
               "summary": "Get a list of branch endpoints",
               "description": "Retrieves a list of endpoints for the specified branch.\nCurrently, Neon permits only one endpoint per branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\n",
               "tags": [
                   "Branch"
               ],
-              "operationId": "listProjectBranchEndpoints",
+              "operationId": "listEndpoints",
               "responses": {
                   "200": {
                       "description": "Returned a list of endpoints for the specified branch",
@@ -1055,33 +828,13 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/databases": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "branch_id",
-                  "in": "path",
-                  "description": "The branch ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "get": {
               "summary": "Get a list of databases",
               "description": "Retrieves a list of databases for the specified branch.\nA branch can have multiple databases.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
               "tags": [
                   "Branch"
               ],
-              "operationId": "listProjectBranchDatabases",
+              "operationId": "listDatabases",
               "responses": {
                   "200": {
                       "description": "Returned a list of databases of the specified branch",
@@ -1124,7 +877,7 @@
               ],
               "summary": "Create a database",
               "description": "Creates a database in the specified branch.\nA branch can have multiple databases.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
-              "operationId": "createProjectBranchDatabase",
+              "operationId": "createDatabase",
               "requestBody": {
                   "content": {
                       "application/json": {
@@ -1193,42 +946,13 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/databases/{database_name}": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "branch_id",
-                  "in": "path",
-                  "description": "The branch ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "database_name",
-                  "in": "path",
-                  "description": "The database name",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "get": {
               "summary": "Get database details",
               "description": "Retrieves information about the specified database.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` and `database_name` by listing branch's databases.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
               "tags": [
                   "Branch"
               ],
-              "operationId": "getProjectBranchDatabase",
+              "operationId": "getDatabase",
               "responses": {
                   "200": {
                       "description": "Returned the database details",
@@ -1261,7 +985,7 @@
               ],
               "summary": "Update a database",
               "description": "Updates the specified database in the branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` and `database_name` by listing the branch's databases.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
-              "operationId": "updateProjectBranchDatabase",
+              "operationId": "updateDatabase",
               "requestBody": {
                   "content": {
                       "application/json": {
@@ -1334,7 +1058,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "deleteProjectBranchDatabase",
+              "operationId": "deleteDatabase",
               "responses": {
                   "200": {
                       "description": "Deleted the specified database",
@@ -1387,33 +1111,13 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/roles": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "branch_id",
-                  "in": "path",
-                  "description": "The branch ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "get": {
               "summary": "Get a list of roles",
               "description": "Retrieves a list of roles from the specified branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Manage users](https://neon.tech/docs/manage/users/).\n",
               "tags": [
                   "Branch"
               ],
-              "operationId": "listProjectBranchRoles",
+              "operationId": "listRoles",
               "responses": {
                   "200": {
                       "description": "Returned a list of roles from the specified branch.",
@@ -1454,7 +1158,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "createProjectBranchRole",
+              "operationId": "createRole",
               "requestBody": {
                   "content": {
                       "application/json": {
@@ -1509,42 +1213,13 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/roles/{role_name}": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "branch_id",
-                  "in": "path",
-                  "description": "The branch ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "role_name",
-                  "in": "path",
-                  "description": "The role name",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "get": {
               "summary": "Get role details",
               "description": "Retrieves details about the specified role.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nYou can obtain the `role_name` by listing the roles for a branch.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Managing users](https://neon.tech/docs/manage/users/).\n",
               "tags": [
                   "Branch"
               ],
-              "operationId": "getProjectBranchRole",
+              "operationId": "getRole",
               "responses": {
                   "200": {
                       "description": "Successfully returned details for the specified role",
@@ -1576,7 +1251,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "deleteProjectBranchRole",
+              "operationId": "deleteRole",
               "responses": {
                   "200": {
                       "description": "Deleted the specified role from the branch",
@@ -1628,42 +1303,13 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/roles/{role_name}/reveal_password": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "branch_id",
-                  "in": "path",
-                  "description": "The branch ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "role_name",
-                  "in": "path",
-                  "description": "The role name",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "get": {
               "summary": "Get role password",
               "description": "Retrieves password of the specified role if possible.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nYou can obtain the `role_name` by listing the roles for a branch.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Managing users](https://neon.tech/docs/manage/users/).\n",
               "tags": [
                   "Branch"
               ],
-              "operationId": "getProjectBranchRolePassword",
+              "operationId": "getRolePassword",
               "responses": {
                   "200": {
                       "description": "Successfully returned password for the specified role",
@@ -1705,42 +1351,13 @@
           }
       },
       "/projects/{project_id}/branches/{branch_id}/roles/{role_name}/reset_password": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "branch_id",
-                  "in": "path",
-                  "description": "The branch ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "role_name",
-                  "in": "path",
-                  "description": "The role nam",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "post": {
               "summary": "Reset the role password",
               "description": "Resets the password for the specified role.\nReturns a new password and operations. The new password is ready to use when the last operation finishes.\nThe old password remains valid until last operation finishes.\nConnections to the read-write endpoint are dropped. If idle,\nthe read-write endpoint becomes active for a short period of time.\n\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nYou can obtain the `role_name` by listing the roles for a branch.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Managing users](https://neon.tech/docs/manage/users/).\n",
               "tags": [
                   "Branch"
               ],
-              "operationId": "resetProjectBranchRolePassword",
+              "operationId": "resetRolePassword",
               "responses": {
                   "200": {
                       "description": "Reset the passsword for the specified role",
@@ -1793,17 +1410,6 @@
           }
       },
       "/projects/{project_id}/endpoints": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "post": {
               "summary": "Create an endpoint",
               "description": "Creates an endpoint for the specified branch.\nAn endpoint is a Neon compute instance.\nThere is a maximum of one endpoint per branch.\nIf the specified branch already has an endpoint, the operation fails.\n\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain `branch_id` by listing the project's branches.\nA `branch_id` has a `br-` prefix.\nCurrently, only the `read_write` endpoint type is supported.\nFor supported regions and `region_id` values, see [Regions](https://neon.tech/docs/introduction/regions/).\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n",
@@ -1996,26 +1602,6 @@
           }
       },
       "/projects/{project_id}/endpoints/{endpoint_id}": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "endpoint_id",
-                  "in": "path",
-                  "description": "The endpoint ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "get": {
               "summary": "Get an endpoint",
               "description": "Retrieves information about the specified endpoint.\nAn endpoint is a Neon compute instance.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain an `endpoint_id` by listing your project's endpoints.\nAn `endpoint_id` has an `ep-` prefix.\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n",
@@ -2289,26 +1875,6 @@
           }
       },
       "/projects/{project_id}/endpoints/{endpoint_id}/suspend": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "description": "The Neon project ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "endpoint_id",
-                  "in": "path",
-                  "description": "The endpoint ID",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ],
           "post": {
               "summary": "Suspend an endpoint",
               "description": "Suspend the specified endpoint\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain an `endpoint_id` by listing your project's endpoints.\nAn `endpoint_id` has an `ep-` prefix.\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n",
@@ -2367,26 +1933,6 @@
                   }
               }
           }
-      },
-      "/projects/{project_id}/endpoints/{endpoint_id}/passwordless_auth": {
-          "parameters": [
-              {
-                  "name": "project_id",
-                  "in": "path",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              },
-              {
-                  "name": "endpoint_id",
-                  "in": "path",
-                  "required": true,
-                  "schema": {
-                      "type": "string"
-                  }
-              }
-          ]
       }
   },
   "components": {
@@ -2461,6 +2007,53 @@
                           ]
                       }
                   }
+              }
+          },
+          "ListProjects": {
+            "description": "Returned a list of projects for the Neon account",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ProjectsResponse"
+                            },
+                            {
+                                "$ref": "#/components/schemas/PaginationResponse"
+                            }
+                        ]
+                    },
+                    "example": {
+                        "projects": [
+                            {
+                                "id": "shiny-wind-028834",
+                                "platform_id": "aws",
+                                "region_id": "aws-us-east-2",
+                                "name": "shiny-wind-028834",
+                                "provisioner": "k8s-pod",
+                                "pg_version": 15,
+                                "created_at": "2022-11-23T17:42:25Z",
+                                "updated_at": "2022-11-23T17:42:25Z",
+                                "proxy_host": "us-east-2.aws.neon.tech",
+                                "cpu_used_sec": 0,
+                                "branch_logical_size_limit": 0
+                            },
+                            {
+                                "id": "winter-boat-259881",
+                                "platform_id": "aws",
+                                "region_id": "aws-us-east-2",
+                                "name": "winter-boat-259881",
+                                "provisioner": "k8s-pod",
+                                "pg_version": 15,
+                                "created_at": "2022-11-23T17:52:25Z",
+                                "updated_at": "2022-11-23T17:52:25Z",
+                                "proxy_host": "us-east-2.aws.neon.tech",
+                                "cpu_used_sec": 0,
+                                "branch_logical_size_limit": 0
+                            }
+                        ]
+                    }
+                }
               }
           },
           "GeneralError": {
@@ -2748,6 +2341,22 @@
                   "scheduling"
               ]
           },
+          "ProjectProvisioner": {
+            "x-enum-names": [
+              {
+                "name": "k8s-pod",
+                "value": "k8s_pod"
+              },
+              {
+                "name": "k8s-neonvm",
+                "value": "k8s_neonvm"
+              },
+              {
+                "name": "docker",
+                "value": "docker"
+              }
+            ]
+          },
           "Project": {
               "type": "object",
               "required": [
@@ -2779,11 +2388,7 @@
                   },
                   "provisioner": {
                       "type": "string",
-                      "enum": [
-                          "k8s-pod",
-                          "k8s-neonvm",
-                          "docker"
-                      ]
+                      "$ref": "#/components/schemas/ProjectProvisioner"
                   },
                   "default_endpoint_settings": {
                       "$ref": "#/components/schemas/ProjectSettingsData"
@@ -2850,6 +2455,40 @@
                   "updated_at": "2022-12-13T01:30:55Z"
               }
           },
+          "ProjectCreateRequestProperties": {
+            "properties": {
+              "settings": {
+                "$ref": "#/components/schemas/ProjectSettings"
+              },
+              "name": {
+                "type": "string"
+              },
+              "autoscaling_limit_min_cu": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "autoscaling_limit_max_cu": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "provisioner": {
+                "type": "string",
+                "$ref": "#/components/schemas/ProjectProvisioner"
+              },
+              "region_id": {
+                  "type": "string"
+              },
+              "default_endpoint_settings": {
+                  "$ref": "#/components/schemas/PgSettingsData"
+              },
+              "pg_version": {
+                  "$ref": "#/components/schemas/PgVersion"
+              },
+              "store_passwords": {
+                  "type": "boolean"
+              }
+            }
+          },
           "ProjectCreateRequest": {
               "type": "object",
               "required": [
@@ -2858,44 +2497,22 @@
               "properties": {
                   "project": {
                       "type": "object",
-                      "properties": {
-                          "settings": {
-                              "$ref": "#/components/schemas/ProjectSettings"
-                          },
-                          "name": {
-                              "type": "string"
-                          },
-                          "autoscaling_limit_min_cu": {
-                              "type": "integer",
-                              "format": "int32"
-                          },
-                          "autoscaling_limit_max_cu": {
-                              "type": "integer",
-                              "format": "int32"
-                          },
-                          "provisioner": {
-                              "type": "string",
-                              "enum": [
-                                  "k8s-pod",
-                                  "k8s-neonvm",
-                                  "docker"
-                              ]
-                          },
-                          "region_id": {
-                              "type": "string"
-                          },
-                          "default_endpoint_settings": {
-                              "$ref": "#/components/schemas/PgSettingsData"
-                          },
-                          "pg_version": {
-                              "$ref": "#/components/schemas/PgVersion"
-                          },
-                          "store_passwords": {
-                              "type": "boolean"
-                          }
-                      }
+                      "$ref": "#/components/schemas/ProjectCreateRequestProperties"
                   }
               }
+          },
+          "ProjectUpdateRequestProperties": {
+            "properties": {
+              "settings": {
+                "$ref": "#/components/schemas/ProjectSettings"
+              },
+              "name": {
+                "type": "string"
+              },
+              "default_endpoint_settings": {
+                "$ref": "#/components/schemas/PgSettingsData"
+              }
+            }
           },
           "ProjectUpdateRequest": {
               "type": "object",
@@ -2905,17 +2522,7 @@
               "properties": {
                   "project": {
                       "type": "object",
-                      "properties": {
-                          "settings": {
-                              "$ref": "#/components/schemas/ProjectSettings"
-                          },
-                          "name": {
-                              "type": "string"
-                          },
-                          "default_endpoint_settings": {
-                              "$ref": "#/components/schemas/PgSettingsData"
-                          }
-                      }
+                      "$ref": "#/components/schemas/ProjectUpdateRequestProperties"
                   }
               }
           },
@@ -3054,6 +2661,23 @@
                   }
               }
           },
+          "BranchProperties": {
+            "properties": {
+              "parent_id": {
+                  "type": "string"
+              },
+              "name": {
+                  "type": "string"
+              },
+              "parent_lsn": {
+                  "type": "string"
+              },
+              "parent_timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+              }
+            }
+          },
           "BranchCreateRequest": {
               "type": "object",
               "properties": {
@@ -3065,23 +2689,16 @@
                   },
                   "branch": {
                       "type": "object",
-                      "properties": {
-                          "parent_id": {
-                              "type": "string"
-                          },
-                          "name": {
-                              "type": "string"
-                          },
-                          "parent_lsn": {
-                              "type": "string"
-                          },
-                          "parent_timestamp": {
-                              "type": "string",
-                              "format": "date-time"
-                          }
-                      }
+                      "$ref": "#/components/schemas/BranchProperties"
                   }
               }
+          },
+          "BranchUpdateRequestProperties": {
+            "properties": {
+              "name": {
+                  "type": "string"
+              }
+            }
           },
           "BranchUpdateRequest": {
               "type": "object",
@@ -3091,11 +2708,7 @@
               "properties": {
                   "branch": {
                       "type": "object",
-                      "properties": {
-                          "name": {
-                              "type": "string"
-                          }
-                      }
+                      "$ref": "#/components/schemas/BranchUpdateRequestProperties"
                   }
               }
           },
@@ -3277,6 +2890,45 @@
                   "transaction"
               ]
           },
+          "EndpointProperties": {
+            "properties": {
+              "branch_id": {
+                  "type": "string"
+              },
+              "region_id": {
+                  "type": "string",
+                  "description": "Only the project region_id is allowed for now\n"
+              },
+              "type": {
+                  "$ref": "#/components/schemas/EndpointType"
+              },
+              "settings": {
+                  "$ref": "#/components/schemas/EndpointSettingsData"
+              },
+              "autoscaling_limit_min_cu": {
+                  "type": "integer",
+                  "format": "int32"
+              },
+              "autoscaling_limit_max_cu": {
+                  "type": "integer",
+                  "format": "int32"
+              },
+              "pooler_enabled": {
+                  "type": "boolean"
+              },
+              "pooler_mode": {
+                  "$ref": "#/components/schemas/EndpointPoolerMode"
+              },
+              "disabled": {
+                  "type": "boolean",
+                  "description": "Restrict any connections to this endpoint."
+              },
+              "passwordless_access": {
+                  "type": "boolean",
+                  "description": "NOT IMPLEMENTED YET\n"
+              }
+          }
+          },
           "EndpointCreateRequest": {
               "type": "object",
               "required": [
@@ -3290,45 +2942,42 @@
                           "type",
                           "name"
                       ],
-                      "properties": {
-                          "branch_id": {
-                              "type": "string"
-                          },
-                          "region_id": {
-                              "type": "string",
-                              "description": "Only the project region_id is allowed for now\n"
-                          },
-                          "type": {
-                              "$ref": "#/components/schemas/EndpointType"
-                          },
-                          "settings": {
-                              "$ref": "#/components/schemas/EndpointSettingsData"
-                          },
-                          "autoscaling_limit_min_cu": {
-                              "type": "integer",
-                              "format": "int32"
-                          },
-                          "autoscaling_limit_max_cu": {
-                              "type": "integer",
-                              "format": "int32"
-                          },
-                          "pooler_enabled": {
-                              "type": "boolean"
-                          },
-                          "pooler_mode": {
-                              "$ref": "#/components/schemas/EndpointPoolerMode"
-                          },
-                          "disabled": {
-                              "type": "boolean",
-                              "description": "Restrict any connections to this endpoint."
-                          },
-                          "passwordless_access": {
-                              "type": "boolean",
-                              "description": "NOT IMPLEMENTED YET\n"
-                          }
-                      }
+                      "$ref": "#/components/schemas/EndpointProperties"
                   }
               }
+          },
+          "EndpointUpdateProperties": {
+            "properties": {
+              "branch_id": {
+                  "description": "Destination branch identifier. The destination branch must not have an exsiting read-write endpoint.\n",
+                  "type": "string"
+              },
+              "autoscaling_limit_min_cu": {
+                  "type": "integer",
+                  "format": "int32"
+              },
+              "autoscaling_limit_max_cu": {
+                  "type": "integer",
+                  "format": "int32"
+              },
+              "settings": {
+                  "$ref": "#/components/schemas/EndpointSettingsData"
+              },
+              "pooler_enabled": {
+                  "type": "boolean"
+              },
+              "pooler_mode": {
+                  "$ref": "#/components/schemas/EndpointPoolerMode"
+              },
+              "disabled": {
+                  "description": "Restrict any connections to this endpoint.",
+                  "type": "boolean"
+              },
+              "passwordless_access": {
+                  "description": "NOT IMPLEMENTED YET\n",
+                  "type": "boolean"
+              }
+          }
           },
           "EndpointUpdateRequest": {
               "type": "object",
@@ -3338,37 +2987,7 @@
               "properties": {
                   "endpoint": {
                       "type": "object",
-                      "properties": {
-                          "branch_id": {
-                              "description": "Destination branch identifier. The destination branch must not have an exsiting read-write endpoint.\n",
-                              "type": "string"
-                          },
-                          "autoscaling_limit_min_cu": {
-                              "type": "integer",
-                              "format": "int32"
-                          },
-                          "autoscaling_limit_max_cu": {
-                              "type": "integer",
-                              "format": "int32"
-                          },
-                          "settings": {
-                              "$ref": "#/components/schemas/EndpointSettingsData"
-                          },
-                          "pooler_enabled": {
-                              "type": "boolean"
-                          },
-                          "pooler_mode": {
-                              "$ref": "#/components/schemas/EndpointPoolerMode"
-                          },
-                          "disabled": {
-                              "description": "Restrict any connections to this endpoint.",
-                              "type": "boolean"
-                          },
-                          "passwordless_access": {
-                              "description": "NOT IMPLEMENTED YET\n",
-                              "type": "boolean"
-                          }
-                      }
+                      "$ref": "#/components/schemas/EndpointUpdateProperties"
                   }
               }
           },
@@ -3536,6 +3155,13 @@
                   "updated_at": "2022-11-23T17:42:25Z"
               }
           },
+          "RoleCreateProperties": {
+            "properties": {
+              "name": {
+                  "type": "string"
+              }
+          }
+          },
           "RoleCreateRequest": {
               "type": "object",
               "required": [
@@ -3547,11 +3173,7 @@
                       "required": [
                           "name"
                       ],
-                      "properties": {
-                          "name": {
-                              "type": "string"
-                          }
-                      }
+                      "$ref": "#/components/schemas/RoleCreateProperties"
                   }
               }
           },
@@ -3633,6 +3255,16 @@
                   "updated_at": "2022-11-30T18:25:15Z"
               }
           },
+          "DatabaseCreateProperties": {
+            "properties": {
+              "name": {
+                  "type": "string"
+              },
+              "owner_name": {
+                  "type": "string"
+              }
+          }
+          },
           "DatabaseCreateRequest": {
               "type": "object",
               "required": [
@@ -3645,16 +3277,19 @@
                           "name",
                           "owner_name"
                       ],
-                      "properties": {
-                          "name": {
-                              "type": "string"
-                          },
-                          "owner_name": {
-                              "type": "string"
-                          }
-                      }
+                      "$ref": "#/components/schemas/DatabaseCreateProperties"
                   }
               }
+          },
+          "DatabaseUpdateProperties": {
+            "properties": {
+              "name": {
+                  "type": "string"
+              },
+              "owner_name": {
+                  "type": "string"
+              }
+            }
           },
           "DatabaseUpdateRequest": {
               "type": "object",
@@ -3664,14 +3299,7 @@
               "properties": {
                   "database": {
                       "type": "object",
-                      "properties": {
-                          "name": {
-                              "type": "string"
-                          },
-                          "owner_name": {
-                              "type": "string"
-                          }
-                      }
+                      "$ref": "#/components/schemas/DatabaseUpdateProperties"
                   }
               }
           },
@@ -3828,11 +3456,14 @@
                   }
               }
           },
+          "InlineString": {
+            "type": "string"
+          },
           "PgSettingsData": {
               "description": "PgSettingsData is a raw representation of Postgres settings",
               "type": "object",
               "additionalProperties": {
-                  "type": "string"
+                "$ref": "#/components/schemas/InlineString"
               }
           },
           "PgVersion": {
