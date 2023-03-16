@@ -1,8 +1,9 @@
 {
   "openapi": "3.0.3",
   "servers": [
-      {
-          "url": "https://console.neon.tech/api/v2"
+      { "description": "Prod",
+        "url": "https://console.neon.tech/api/v2",
+        "x-server-name": "Production"
       }
   ],
   "info": {
@@ -264,6 +265,7 @@
                   "Project"
               ],
               "operationId": "listProjects",
+              "x-request-name": "ListProjectsRequest",
               "parameters": [
                   {
                       "name": "cursor",
@@ -287,51 +289,7 @@
               ],
               "responses": {
                   "200": {
-                      "description": "Returned a list of projects for the Neon account",
-                      "content": {
-                          "application/json": {
-                              "schema": {
-                                  "allOf": [
-                                      {
-                                          "$ref": "#/components/schemas/ProjectsResponse"
-                                      },
-                                      {
-                                          "$ref": "#/components/schemas/PaginationResponse"
-                                      }
-                                  ]
-                              },
-                              "example": {
-                                  "projects": [
-                                      {
-                                          "id": "shiny-wind-028834",
-                                          "platform_id": "aws",
-                                          "region_id": "aws-us-east-2",
-                                          "name": "shiny-wind-028834",
-                                          "provisioner": "k8s-pod",
-                                          "pg_version": 15,
-                                          "created_at": "2022-11-23T17:42:25Z",
-                                          "updated_at": "2022-11-23T17:42:25Z",
-                                          "proxy_host": "us-east-2.aws.neon.tech",
-                                          "cpu_used_sec": 0,
-                                          "branch_logical_size_limit": 0
-                                      },
-                                      {
-                                          "id": "winter-boat-259881",
-                                          "platform_id": "aws",
-                                          "region_id": "aws-us-east-2",
-                                          "name": "winter-boat-259881",
-                                          "provisioner": "k8s-pod",
-                                          "pg_version": 15,
-                                          "created_at": "2022-11-23T17:52:25Z",
-                                          "updated_at": "2022-11-23T17:52:25Z",
-                                          "proxy_host": "us-east-2.aws.neon.tech",
-                                          "cpu_used_sec": 0,
-                                          "branch_logical_size_limit": 0
-                                      }
-                                  ]
-                              }
-                          }
-                      }
+                    "$ref": "#/components/responses/ListProjects"
                   },
                   "default": {
                       "$ref": "#/components/responses/GeneralError"
@@ -344,7 +302,7 @@
               "tags": [
                   "Project"
               ],
-              "operationId": "createProject",
+              "operationId": "create",
               "requestBody": {
                   "required": true,
                   "content": {
@@ -401,7 +359,7 @@
               "tags": [
                   "Project"
               ],
-              "operationId": "getProject",
+              "operationId": "get",
               "responses": {
                   "200": {
                       "description": "Returned information about the specified project",
@@ -439,7 +397,7 @@
               "tags": [
                   "Project"
               ],
-              "operationId": "updateProject",
+              "operationId": "update",
               "requestBody": {
                   "required": true,
                   "content": {
@@ -493,7 +451,7 @@
               "tags": [
                   "Project"
               ],
-              "operationId": "deleteProject",
+              "operationId": "delete",
               "responses": {
                   "200": {
                       "description": "Deleted the specified project",
@@ -535,6 +493,7 @@
                   "Operation"
               ],
               "operationId": "listProjectOperations",
+              "x-request-name": "ListProjectOperationsRequest",
               "parameters": [
                   {
                       "name": "cursor",
@@ -784,7 +743,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "getProjectBranch",
+              "operationId": "get",
               "responses": {
                   "200": {
                       "description": "Returned information about the specified branch",
@@ -820,7 +779,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "deleteProjectBranch",
+              "operationId": "delete",
               "responses": {
                   "200": {
                       "description": "Deleted the specified branch",
@@ -879,7 +838,7 @@
               ],
               "summary": "Update a branch",
               "description": "Updates the specified branch. Only changing the branch name is supported.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nFor more information, see [Manage branches](https://neon.tech/docs/manage/branches/).\n",
-              "operationId": "updateProjectBranch",
+              "operationId": "update",
               "requestBody": {
                   "content": {
                       "application/json": {
@@ -1011,7 +970,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "listProjectBranchEndpoints",
+              "operationId": "listEndpoints",
               "responses": {
                   "200": {
                       "description": "Returned a list of endpoints for the specified branch",
@@ -1080,7 +1039,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "listProjectBranchDatabases",
+              "operationId": "listDatabases",
               "responses": {
                   "200": {
                       "description": "Returned a list of databases of the specified branch",
@@ -1123,7 +1082,7 @@
               ],
               "summary": "Create a database",
               "description": "Creates a database in the specified branch.\nA branch can have multiple databases.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
-              "operationId": "createProjectBranchDatabase",
+              "operationId": "createDatabase",
               "requestBody": {
                   "content": {
                       "application/json": {
@@ -1227,7 +1186,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "getProjectBranchDatabase",
+              "operationId": "getDatabase",
               "responses": {
                   "200": {
                       "description": "Returned the database details",
@@ -1260,7 +1219,7 @@
               ],
               "summary": "Update a database",
               "description": "Updates the specified database in the branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` and `database_name` by listing the branch's databases.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
-              "operationId": "updateProjectBranchDatabase",
+              "operationId": "updateDatabase",
               "requestBody": {
                   "content": {
                       "application/json": {
@@ -1333,7 +1292,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "deleteProjectBranchDatabase",
+              "operationId": "deleteDatabase",
               "responses": {
                   "200": {
                       "description": "Deleted the specified database",
@@ -1412,7 +1371,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "listProjectBranchRoles",
+              "operationId": "listRoles",
               "responses": {
                   "200": {
                       "description": "Returned a list of roles from the specified branch.",
@@ -1453,7 +1412,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "createProjectBranchRole",
+              "operationId": "createRole",
               "requestBody": {
                   "content": {
                       "application/json": {
@@ -1543,7 +1502,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "getProjectBranchRole",
+              "operationId": "getRole",
               "responses": {
                   "200": {
                       "description": "Successfully returned details for the specified role",
@@ -1575,7 +1534,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "deleteProjectBranchRole",
+              "operationId": "deleteRole",
               "responses": {
                   "200": {
                       "description": "Deleted the specified role from the branch",
@@ -1662,7 +1621,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "getProjectBranchRolePassword",
+              "operationId": "getRolePassword",
               "responses": {
                   "200": {
                       "description": "Successfully returned password for the specified role",
@@ -1739,7 +1698,7 @@
               "tags": [
                   "Branch"
               ],
-              "operationId": "resetProjectBranchRolePassword",
+              "operationId": "resetRolePassword",
               "responses": {
                   "200": {
                       "description": "Reset the passsword for the specified role",
@@ -2462,6 +2421,53 @@
                   }
               }
           },
+          "ListProjects": {
+            "description": "Returned a list of projects for the Neon account",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ProjectsResponse"
+                            },
+                            {
+                                "$ref": "#/components/schemas/PaginationResponse"
+                            }
+                        ]
+                    },
+                    "example": {
+                        "projects": [
+                            {
+                                "id": "shiny-wind-028834",
+                                "platform_id": "aws",
+                                "region_id": "aws-us-east-2",
+                                "name": "shiny-wind-028834",
+                                "provisioner": "k8s-pod",
+                                "pg_version": 15,
+                                "created_at": "2022-11-23T17:42:25Z",
+                                "updated_at": "2022-11-23T17:42:25Z",
+                                "proxy_host": "us-east-2.aws.neon.tech",
+                                "cpu_used_sec": 0,
+                                "branch_logical_size_limit": 0
+                            },
+                            {
+                                "id": "winter-boat-259881",
+                                "platform_id": "aws",
+                                "region_id": "aws-us-east-2",
+                                "name": "winter-boat-259881",
+                                "provisioner": "k8s-pod",
+                                "pg_version": 15,
+                                "created_at": "2022-11-23T17:52:25Z",
+                                "updated_at": "2022-11-23T17:52:25Z",
+                                "proxy_host": "us-east-2.aws.neon.tech",
+                                "cpu_used_sec": 0,
+                                "branch_logical_size_limit": 0
+                            }
+                        ]
+                    }
+                }
+              }
+          },
           "GeneralError": {
               "description": "General Error",
               "content": {
@@ -2747,6 +2753,22 @@
                   "scheduling"
               ]
           },
+          "ProjectProvisioner": {
+            "x-enum-names": [
+              {
+                "name": "k8s-pod",
+                "value": "k8s_pod"
+              },
+              {
+                "name": "k8s-neonvm",
+                "value": "k8s_neonvm"
+              },
+              {
+                "name": "docker",
+                "value": "docker"
+              }
+            ]
+          },
           "Project": {
               "type": "object",
               "required": [
@@ -2778,11 +2800,7 @@
                   },
                   "provisioner": {
                       "type": "string",
-                      "enum": [
-                          "k8s-pod",
-                          "k8s-neonvm",
-                          "docker"
-                      ]
+                      "$ref": "#/components/schemas/ProjectProvisioner"
                   },
                   "default_endpoint_settings": {
                       "$ref": "#/components/schemas/ProjectSettingsData"
@@ -2849,6 +2867,40 @@
                   "updated_at": "2022-12-13T01:30:55Z"
               }
           },
+          "ProjectCreateRequestProperties": {
+            "properties": {
+              "settings": {
+                "$ref": "#/components/schemas/ProjectSettings"
+              },
+              "name": {
+                "type": "string"
+              },
+              "autoscaling_limit_min_cu": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "autoscaling_limit_max_cu": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "provisioner": {
+                "type": "string",
+                "$ref": "#/components/schemas/ProjectProvisioner"
+              },
+              "region_id": {
+                  "type": "string"
+              },
+              "default_endpoint_settings": {
+                  "$ref": "#/components/schemas/PgSettingsData"
+              },
+              "pg_version": {
+                  "$ref": "#/components/schemas/PgVersion"
+              },
+              "store_passwords": {
+                  "type": "boolean"
+              }
+            }
+          },
           "ProjectCreateRequest": {
               "type": "object",
               "required": [
@@ -2857,44 +2909,22 @@
               "properties": {
                   "project": {
                       "type": "object",
-                      "properties": {
-                          "settings": {
-                              "$ref": "#/components/schemas/ProjectSettings"
-                          },
-                          "name": {
-                              "type": "string"
-                          },
-                          "autoscaling_limit_min_cu": {
-                              "type": "integer",
-                              "format": "int32"
-                          },
-                          "autoscaling_limit_max_cu": {
-                              "type": "integer",
-                              "format": "int32"
-                          },
-                          "provisioner": {
-                              "type": "string",
-                              "enum": [
-                                  "k8s-pod",
-                                  "k8s-neonvm",
-                                  "docker"
-                              ]
-                          },
-                          "region_id": {
-                              "type": "string"
-                          },
-                          "default_endpoint_settings": {
-                              "$ref": "#/components/schemas/PgSettingsData"
-                          },
-                          "pg_version": {
-                              "$ref": "#/components/schemas/PgVersion"
-                          },
-                          "store_passwords": {
-                              "type": "boolean"
-                          }
-                      }
+                      "$ref": "#/components/schemas/ProjectCreateRequestProperties"
                   }
               }
+          },
+          "ProjectUpdateRequestProperties": {
+            "properties": {
+              "settings": {
+                "$ref": "#/components/schemas/ProjectSettings"
+              },
+              "name": {
+                "type": "string"
+              },
+              "default_endpoint_settings": {
+                "$ref": "#/components/schemas/PgSettingsData"
+              }
+            }
           },
           "ProjectUpdateRequest": {
               "type": "object",
@@ -2904,17 +2934,7 @@
               "properties": {
                   "project": {
                       "type": "object",
-                      "properties": {
-                          "settings": {
-                              "$ref": "#/components/schemas/ProjectSettings"
-                          },
-                          "name": {
-                              "type": "string"
-                          },
-                          "default_endpoint_settings": {
-                              "$ref": "#/components/schemas/PgSettingsData"
-                          }
-                      }
+                      "$ref": "#/components/schemas/ProjectUpdateRequestProperties"
                   }
               }
           },
@@ -3053,6 +3073,23 @@
                   }
               }
           },
+          "BranchProperties": {
+            "properties": {
+              "parent_id": {
+                  "type": "string"
+              },
+              "name": {
+                  "type": "string"
+              },
+              "parent_lsn": {
+                  "type": "string"
+              },
+              "parent_timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+              }
+            }
+          },
           "BranchCreateRequest": {
               "type": "object",
               "properties": {
@@ -3064,23 +3101,16 @@
                   },
                   "branch": {
                       "type": "object",
-                      "properties": {
-                          "parent_id": {
-                              "type": "string"
-                          },
-                          "name": {
-                              "type": "string"
-                          },
-                          "parent_lsn": {
-                              "type": "string"
-                          },
-                          "parent_timestamp": {
-                              "type": "string",
-                              "format": "date-time"
-                          }
-                      }
+                      "$ref": "#/components/schemas/BranchProperties"
                   }
               }
+          },
+          "BranchUpdateRequestProperties": {
+            "properties": {
+              "name": {
+                  "type": "string"
+              }
+            }
           },
           "BranchUpdateRequest": {
               "type": "object",
@@ -3090,11 +3120,7 @@
               "properties": {
                   "branch": {
                       "type": "object",
-                      "properties": {
-                          "name": {
-                              "type": "string"
-                          }
-                      }
+                      "$ref": "#/components/schemas/BranchUpdateRequestProperties"
                   }
               }
           },
@@ -3276,6 +3302,45 @@
                   "transaction"
               ]
           },
+          "EndpointProperties": {
+            "properties": {
+              "branch_id": {
+                  "type": "string"
+              },
+              "region_id": {
+                  "type": "string",
+                  "description": "Only the project region_id is allowed for now\n"
+              },
+              "type": {
+                  "$ref": "#/components/schemas/EndpointType"
+              },
+              "settings": {
+                  "$ref": "#/components/schemas/EndpointSettingsData"
+              },
+              "autoscaling_limit_min_cu": {
+                  "type": "integer",
+                  "format": "int32"
+              },
+              "autoscaling_limit_max_cu": {
+                  "type": "integer",
+                  "format": "int32"
+              },
+              "pooler_enabled": {
+                  "type": "boolean"
+              },
+              "pooler_mode": {
+                  "$ref": "#/components/schemas/EndpointPoolerMode"
+              },
+              "disabled": {
+                  "type": "boolean",
+                  "description": "Restrict any connections to this endpoint."
+              },
+              "passwordless_access": {
+                  "type": "boolean",
+                  "description": "NOT IMPLEMENTED YET\n"
+              }
+          }
+          },
           "EndpointCreateRequest": {
               "type": "object",
               "required": [
@@ -3289,45 +3354,42 @@
                           "type",
                           "name"
                       ],
-                      "properties": {
-                          "branch_id": {
-                              "type": "string"
-                          },
-                          "region_id": {
-                              "type": "string",
-                              "description": "Only the project region_id is allowed for now\n"
-                          },
-                          "type": {
-                              "$ref": "#/components/schemas/EndpointType"
-                          },
-                          "settings": {
-                              "$ref": "#/components/schemas/EndpointSettingsData"
-                          },
-                          "autoscaling_limit_min_cu": {
-                              "type": "integer",
-                              "format": "int32"
-                          },
-                          "autoscaling_limit_max_cu": {
-                              "type": "integer",
-                              "format": "int32"
-                          },
-                          "pooler_enabled": {
-                              "type": "boolean"
-                          },
-                          "pooler_mode": {
-                              "$ref": "#/components/schemas/EndpointPoolerMode"
-                          },
-                          "disabled": {
-                              "type": "boolean",
-                              "description": "Restrict any connections to this endpoint."
-                          },
-                          "passwordless_access": {
-                              "type": "boolean",
-                              "description": "NOT IMPLEMENTED YET\n"
-                          }
-                      }
+                      "$ref": "#/components/schemas/EndpointProperties"
                   }
               }
+          },
+          "EndpointUpdateProperties": {
+            "properties": {
+              "branch_id": {
+                  "description": "Destination branch identifier. The destination branch must not have an exsiting read-write endpoint.\n",
+                  "type": "string"
+              },
+              "autoscaling_limit_min_cu": {
+                  "type": "integer",
+                  "format": "int32"
+              },
+              "autoscaling_limit_max_cu": {
+                  "type": "integer",
+                  "format": "int32"
+              },
+              "settings": {
+                  "$ref": "#/components/schemas/EndpointSettingsData"
+              },
+              "pooler_enabled": {
+                  "type": "boolean"
+              },
+              "pooler_mode": {
+                  "$ref": "#/components/schemas/EndpointPoolerMode"
+              },
+              "disabled": {
+                  "description": "Restrict any connections to this endpoint.",
+                  "type": "boolean"
+              },
+              "passwordless_access": {
+                  "description": "NOT IMPLEMENTED YET\n",
+                  "type": "boolean"
+              }
+          }
           },
           "EndpointUpdateRequest": {
               "type": "object",
@@ -3337,37 +3399,7 @@
               "properties": {
                   "endpoint": {
                       "type": "object",
-                      "properties": {
-                          "branch_id": {
-                              "description": "Destination branch identifier. The destination branch must not have an exsiting read-write endpoint.\n",
-                              "type": "string"
-                          },
-                          "autoscaling_limit_min_cu": {
-                              "type": "integer",
-                              "format": "int32"
-                          },
-                          "autoscaling_limit_max_cu": {
-                              "type": "integer",
-                              "format": "int32"
-                          },
-                          "settings": {
-                              "$ref": "#/components/schemas/EndpointSettingsData"
-                          },
-                          "pooler_enabled": {
-                              "type": "boolean"
-                          },
-                          "pooler_mode": {
-                              "$ref": "#/components/schemas/EndpointPoolerMode"
-                          },
-                          "disabled": {
-                              "description": "Restrict any connections to this endpoint.",
-                              "type": "boolean"
-                          },
-                          "passwordless_access": {
-                              "description": "NOT IMPLEMENTED YET\n",
-                              "type": "boolean"
-                          }
-                      }
+                      "$ref": "#/components/schemas/EndpointUpdateProperties"
                   }
               }
           },
@@ -3535,6 +3567,13 @@
                   "updated_at": "2022-11-23T17:42:25Z"
               }
           },
+          "RoleCreateProperties": {
+            "properties": {
+              "name": {
+                  "type": "string"
+              }
+          }
+          },
           "RoleCreateRequest": {
               "type": "object",
               "required": [
@@ -3546,11 +3585,7 @@
                       "required": [
                           "name"
                       ],
-                      "properties": {
-                          "name": {
-                              "type": "string"
-                          }
-                      }
+                      "$ref": "#/components/schemas/RoleCreateProperties"
                   }
               }
           },
@@ -3632,6 +3667,16 @@
                   "updated_at": "2022-11-30T18:25:15Z"
               }
           },
+          "DatabaseCreateProperties": {
+            "properties": {
+              "name": {
+                  "type": "string"
+              },
+              "owner_name": {
+                  "type": "string"
+              }
+          }
+          },
           "DatabaseCreateRequest": {
               "type": "object",
               "required": [
@@ -3644,16 +3689,19 @@
                           "name",
                           "owner_name"
                       ],
-                      "properties": {
-                          "name": {
-                              "type": "string"
-                          },
-                          "owner_name": {
-                              "type": "string"
-                          }
-                      }
+                      "$ref": "#/components/schemas/DatabaseCreateProperties"
                   }
               }
+          },
+          "DatabaseUpdateProperties": {
+            "properties": {
+              "name": {
+                  "type": "string"
+              },
+              "owner_name": {
+                  "type": "string"
+              }
+            }
           },
           "DatabaseUpdateRequest": {
               "type": "object",
@@ -3663,14 +3711,7 @@
               "properties": {
                   "database": {
                       "type": "object",
-                      "properties": {
-                          "name": {
-                              "type": "string"
-                          },
-                          "owner_name": {
-                              "type": "string"
-                          }
-                      }
+                      "$ref": "#/components/schemas/DatabaseUpdateProperties"
                   }
               }
           },
@@ -3827,11 +3868,14 @@
                   }
               }
           },
+          "InlineString": {
+            "type": "string"
+          },
           "PgSettingsData": {
               "description": "PgSettingsData is a raw representation of Postgres settings",
               "type": "object",
               "additionalProperties": {
-                  "type": "string"
+                "$ref": "#/components/schemas/InlineString"
               }
           },
           "PgVersion": {
